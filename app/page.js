@@ -6,6 +6,19 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { GraduationCap, Users, Wrench, Briefcase } from "lucide-react";
 import { Code, Brain, Cloud } from "lucide-react";
+import {
+  FaGraduationCap,
+  FaTwitter,
+  FaCommentDots,
+  FaLinkedinIn,
+  FaBookOpen,
+  FaShieldAlt,
+  FaUsers
+} from "react-icons/fa";
+
+
+
+
 
 
 gsap.registerPlugin(ScrollTrigger);
@@ -69,6 +82,12 @@ export default function Home() {
   const featuresRef = useRef(null);
   const coursesRef = useRef(null);
   const coursesGridRef = useRef(null);
+  const howItWorksRef = useRef(null);
+const stepsGridRef = useRef(null);
+const faqRef = useRef(null);
+const faqGridRef = useRef(null);
+
+
 
   useEffect(() => {
     // Hero animations
@@ -191,6 +210,90 @@ if (coursesRef.current) {
     }
   );
 }
+// How It Works Section Animation
+if (howItWorksRef.current) {
+  gsap.fromTo(stepsGridRef.current.children,
+    {
+      opacity: 0,
+      y: 80,
+      rotationX: 30,
+      scale: 0.85
+    },
+    {
+      opacity: 1,
+      y: 0,
+      rotationX: 0,
+      scale: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      stagger: 0.3,
+      scrollTrigger: {
+        trigger: howItWorksRef.current,
+        start: "top 75%",
+        toggleActions: "play none none reverse"
+      }
+    }
+  );
+
+  // Timeline line animation
+  gsap.fromTo(".z-10.w-1", 
+    { height: 0 }, 
+    { 
+      height: "100%", 
+      duration: 2, 
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: howItWorksRef.current,
+        start: "top 80%",
+        scrub: true
+      }
+    }
+  );
+
+  // Step number bounce
+  gsap.utils.toArray(".w-24.h-24").forEach((step, i) => {
+    gsap.fromTo(step,
+      { scale: 0, rotation: 180 },
+      {
+        scale: 1,
+        rotation: 0,
+        duration: 1,
+        ease: "back.out(1.7)",
+        scrollTrigger: {
+          trigger: step,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
+        }
+      }
+    );
+  });
+}
+// FAQ Section Animation
+if (faqRef.current) {
+  gsap.fromTo(faqGridRef.current.children,
+    {
+      opacity: 0,
+      y: 40,
+      scale: 0.95,
+      rotationX: 10
+    },
+    {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      rotationX: 0,
+      duration: 0.8,
+      ease: "power3.out",
+      stagger: 0.15,
+      scrollTrigger: {
+        trigger: faqRef.current,
+        start: "top 80%",
+        toggleActions: "play none none reverse"
+      }
+    }
+  );
+}
+
 
 
     // Navbar hover effect
@@ -325,7 +428,7 @@ if (coursesRef.current) {
       {/* TOP COMPANIES */}
       <section className="py-12 bg-black" ref={companiesRef}>
         <div className="container mx-auto px-6 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 ">
+          <h2 className="text-2xl md:text-5xl font-extrabold mb-6 text-center">
             Our Top {""}
             <span className="bg-gradient-to-r from-green-400 via-emerald-400 to-lime-400 bg-clip-text text-transparent">Partner Companies</span>
           </h2>
@@ -345,7 +448,7 @@ if (coursesRef.current) {
       {/* STATS */}
       <section className="py-20 bg-black" ref={statsRef}>
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-3xl text-center md:text-4xl font-bold mb-6 text-white">
+          <h2 className="text-2xl md:text-5xl font-extrabold mb-6 text-center">
             Trustable 
             <span className="bg-gradient-to-r from-green-400 via-emerald-400 to-lime-400 bg-clip-text text-transparent"> by</span>
           </h2>
@@ -365,7 +468,7 @@ if (coursesRef.current) {
         <div className="max-w-7xl mx-auto px-6">
           {/* Heading */}
           <div className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
+            <h2 className="text-2xl md:text-5xl font-extrabold mb-6 text-center">
               Why Choose{" "}
               <span className="bg-gradient-to-r from-green-400 via-emerald-400 to-lime-400 bg-clip-text text-transparent">
                 DNP
@@ -530,9 +633,336 @@ if (coursesRef.current) {
     </div>
   </div>
 </section>
+{/* HOW IT WORKS SECTION */}
+<section className="py-20 bg-gradient-to-b from-black via-black/80 to-black/20" ref={howItWorksRef}>
+  <div className="max-w-4xl mx-auto px-6">
+    {/* Heading */}
+    <div className="text-center mb-20">
+      <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+        How It{" "}
+        <span className="bg-gradient-to-r from-green-400 via-emerald-400 to-lime-400 bg-clip-text text-transparent">
+          Works
+        </span>
+      </h2>
+      <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+        Join thousands of students who have transformed their careers through our proven 3-step learning journey.
+      </p>
+    </div>
+
+    {/* Steps Container */}
+    <div className="relative" ref={stepsGridRef}>
+      {/* Single Center Vertical Timeline Line */}
+      <div className="absolute left-1/2 -translate-x-1/2 w-1 bg-gradient-to-b from-emerald-400/30 via-emerald-400/70 to-emerald-400 h-full z-10"></div>
+      
+      {/* Steps - All on Left Side with Center Alignment - GREEN PATTERN */}
+      <div className="space-y-24 relative z-20 max-w-2xl mx-auto">
+        
+        {/* Step 1 - EMERALD/GREEN */}
+        <div className="group flex items-start pl-20">
+          <div className="absolute left-8 flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl shadow-2xl group-hover:scale-110 transition-all duration-700 shadow-emerald-500/25 z-30">
+            <div className="text-xl font-bold text-white">01</div>
+          </div>
+          
+          <div className="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:border-emerald-400 group-hover:bg-white/10 transition-all duration-500 flex-1 min-h-[200px] step-card ml-4">
+            <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors">Enroll & Start Learning</h3>
+            <p className="text-gray-400 mb-6 leading-relaxed">Choose your course, get instant access to structured curriculum with video lectures, coding challenges, and interactive projects.</p>
+            
+            <div className="space-y-2 mb-6">
+              <div className="flex items-center text-sm text-emerald-400">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                Interactive video lessons
+              </div>
+              <div className="flex items-center text-sm text-emerald-400">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                Hands-on coding exercises
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Step 2 - EMERALD/GREEN PATTERN */}
+        <div className="group flex items-start pl-20">
+          <div className="absolute left-8 flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500/[0.8] to-green-600/[0.8] rounded-2xl shadow-2xl group-hover:scale-110 transition-all duration-700 shadow-emerald-500/20 z-30">
+            <div className="text-xl font-bold text-white">02</div>
+          </div>
+          
+          <div className="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:border-emerald-400 group-hover:bg-white/10 transition-all duration-500 flex-1 min-h-[200px] step-card ml-4">
+            <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors">Build Real Projects</h3>
+            <p className="text-gray-400 mb-6 leading-relaxed">Apply your skills through industry-level projects with code reviews and portfolio guidance from expert mentors.</p>
+            
+            <div className="space-y-2 mb-6">
+              <div className="flex items-center text-sm text-emerald-400">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                10+ live projects
+              </div>
+              <div className="flex items-center text-sm text-emerald-400">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                Expert code reviews
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Step 3 - EMERALD/GREEN PATTERN */}
+        <div className="group flex items-start pl-20">
+          <div className="absolute left-8 flex items-center justify-center w-16 h-16 bg-gradient-to-r from-emerald-500/[0.6] to-green-600/[0.6] rounded-2xl shadow-2xl group-hover:scale-110 transition-all duration-700 shadow-emerald-500/15 z-30">
+            <div className="text-xl font-bold text-white">03</div>
+          </div>
+          
+          <div className="bg-white/5 backdrop-blur-md p-8 rounded-3xl border border-white/10 hover:border-emerald-400 group-hover:bg-white/10 transition-all duration-500 flex-1 min-h-[200px] step-card ml-4">
+            <h3 className="text-2xl font-bold mb-4 text-white group-hover:text-emerald-400 transition-colors">Get Placed & Succeed</h3>
+            <p className="text-gray-400 mb-6 leading-relaxed">Receive personalized placement support, mock interviews, and direct referrals to 70+ partner companies.</p>
+            
+            <div className="space-y-2 mb-6">
+              <div className="flex items-center text-sm text-emerald-400">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                Resume building
+              </div>
+              <div className="flex items-center text-sm text-emerald-400">
+                <div className="w-2 h-2 bg-emerald-400 rounded-full mr-3"></div>
+                Mock interviews
+              </div>
+            </div>
+            
+            {/* Success Stats */}
+            <div className="grid grid-cols-3 gap-4 mt-6 pt-6 border-t border-white/20">
+              <div className="text-center">
+                <div className="text-xl font-bold text-emerald-400">95%</div>
+                <div className="text-xs text-gray-400">Placement</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-emerald-400">₹8-25L</div>
+                <div className="text-xs text-gray-400">Avg Package</div>
+              </div>
+              <div className="text-center">
+                <div className="text-xl font-bold text-emerald-400">70+</div>
+                <div className="text-xs text-gray-400">Companies</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{/* FAQ SECTION */}
+<section className="py-20 bg-black" ref={faqRef}>
+  <div className="max-w-4xl mx-auto px-6">
+    {/* Heading */}
+    <div className="text-center mb-20">
+      <h2 className="text-3xl md:text-5xl font-extrabold mb-6">
+        Frequently Asked{" "}
+        <span className="bg-gradient-to-r from-green-400 via-emerald-400 to-lime-400 bg-clip-text text-transparent">
+          Questions
+        </span>
+      </h2>
+      <p className="text-gray-400 max-w-2xl mx-auto text-lg leading-relaxed">
+        Find answers to common questions about our courses, pricing, and placement support.
+      </p>
+    </div>
+
+    {/* FAQ Accordion */}
+    <div className="space-y-4 max-w-3xl mx-auto" ref={faqGridRef}>
+      
+      {/* FAQ 1 */}
+      <div className="faq-item group">
+        <div className="flex items-center justify-between p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400 cursor-pointer transition-all duration-500 group-hover:bg-white/10">
+          <div className="flex items-center">
+            <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h4 className="text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">Do you offer job guarantees?</h4>
+          </div>
+          <div className="faq-icon flex items-center justify-center w-10 h-10 bg-emerald-500/20 rounded-xl border border-emerald-400/30 group-hover:bg-emerald-500/40 transition-all duration-300">
+            <svg className="w-5 h-5 text-emerald-400 group-hover:text-emerald-200 transform group-hover:rotate-180 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+        <div className="faq-answer max-h-0 overflow-hidden bg-white/3 backdrop-blur-md rounded-2xl border border-white/5 ml-14 -mt-2 transition-all duration-700 ease-out group-data-[open=true]:max-h-96 group-data-[open=true]:p-6 group-data-[open=true]:border-emerald-400/50">
+          <p className="text-gray-300 leading-relaxed">
+            We provide 100% placement assistance with resume building, mock interviews, and direct referrals to 70+ partner companies. Our 95% placement rate speaks for itself. While we cannot guarantee jobs (as final hiring depends on companies), our track record is exceptional.
+          </p>
+        </div>
+      </div>
+
+      {/* FAQ 2 */}
+      <div className="faq-item group">
+        <div className="flex items-center justify-between p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400 cursor-pointer transition-all duration-500 group-hover:bg-white/10">
+          <div className="flex items-center">
+            <div className="w-10 h-10 bg-gradient-to-r from-emerald-500/[0.8] to-green-600/[0.8] rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1" />
+              </svg>
+            </div>
+            <h4 className="text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">What is the course duration and schedule?</h4>
+          </div>
+          <div className="faq-icon flex items-center justify-center w-10 h-10 bg-emerald-500/20 rounded-xl border border-emerald-400/30 group-hover:bg-emerald-500/40 transition-all duration-300">
+            <svg className="w-5 h-5 text-emerald-400 group-hover:text-emerald-200 transform group-hover:rotate-180 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+        <div className="faq-answer max-h-0 overflow-hidden bg-white/3 backdrop-blur-md rounded-2xl border border-white/5 ml-14 -mt-2 transition-all duration-700 ease-out group-data-[open=true]:max-h-96 group-data-[open=true]:p-6 group-data-[open=true]:border-emerald-400/50">
+          <p className="text-gray-300 leading-relaxed">
+            Our courses range from 3-6 months with live classes 5 days/week (2-3 hours daily). Weekend batches available for working professionals. All classes are recorded for lifetime access with flexible self-paced learning options.
+          </p>
+        </div>
+      </div>
+
+      {/* FAQ 3 */}
+      <div className="faq-item group">
+        <div className="flex items-center justify-between p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400 cursor-pointer transition-all duration-500 group-hover:bg-white/10">
+          <div className="flex items-center">
+            <div className="w-10 h-10 bg-gradient-to-r from-emerald-500/[0.6] to-green-600/[0.6] rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <h4 className="text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">Are there any prerequisites required?</h4>
+          </div>
+          <div className="faq-icon flex items-center justify-center w-10 h-10 bg-emerald-500/20 rounded-xl border border-emerald-400/30 group-hover:bg-emerald-500/40 transition-all duration-300">
+            <svg className="w-5 h-5 text-emerald-400 group-hover:text-emerald-200 transform group-hover:rotate-180 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+        <div className="faq-answer max-h-0 overflow-hidden bg-white/3 backdrop-blur-md rounded-2xl border border-white/5 ml-14 -mt-2 transition-all duration-700 ease-out group-data-[open=true]:max-h-96 group-data-[open=true]:p-6 group-data-[open=true]:border-emerald-400/50">
+          <p className="text-gray-300 leading-relaxed">
+            No prior coding experience needed! Basic computer knowledge is sufficient. We start from fundamentals and gradually build up to advanced concepts. Perfect for complete beginners and career switchers.
+          </p>
+        </div>
+      </div>
+
+      {/* FAQ 4 */}
+      <div className="faq-item group">
+        <div className="flex items-center justify-between p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 hover:border-emerald-400 cursor-pointer transition-all duration-500 group-hover:bg-white/10">
+          <div className="flex items-center">
+            <div className="w-10 h-10 bg-gradient-to-r from-emerald-500 to-green-600 rounded-xl flex items-center justify-center mr-4 shadow-lg group-hover:scale-110 transition-all duration-300 flex-shrink-0">
+              <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+            </div>
+            <h4 className="text-xl font-semibold text-white group-hover:text-emerald-400 transition-colors">What kind of support do you provide?</h4>
+          </div>
+          <div className="faq-icon flex items-center justify-center w-10 h-10 bg-emerald-500/20 rounded-xl border border-emerald-400/30 group-hover:bg-emerald-500/40 transition-all duration-300">
+            <svg className="w-5 h-5 text-emerald-400 group-hover:text-emerald-200 transform group-hover:rotate-180 transition-all duration-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </div>
+        <div className="faq-answer max-h-0 overflow-hidden bg-white/3 backdrop-blur-md rounded-2xl border border-white/5 ml-14 -mt-2 transition-all duration-700 ease-out group-data-[open=true]:max-h-96 group-data-[open=true]:p-6 group-data-[open=true]:border-emerald-400/50">
+          <p className="text-gray-300 leading-relaxed">
+            24/7 doubt resolution via Discord, dedicated mentors, weekly 1:1 sessions, lifetime course access, and placement cell support. Average response time: under 15 minutes during live hours.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{/* ================= FOOTER ================= */}
+<footer className="bg-gradient-to-t from-black/90 via-black to-transparent pt-20 pb-12 border-t border-white/10">
+  <div className="max-w-7xl mx-auto px-6">
+
+    {/* Top Footer */}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+
+      {/* Logo & Description */}
+      <div>
+        <div className="flex items-center mb-6 group">
+          <div className="w-12 h-12 bg-gradient-to-r from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center shadow-2xl mr-4 group-hover:scale-110 transition-all duration-300">
+            <FaGraduationCap className="w-7 h-7 text-white" />
+          </div>
+          <h3 className="text-2xl font-extrabold bg-gradient-to-r from-green-400 via-emerald-400 to-lime-400 bg-clip-text text-transparent">
+            DNP
+          </h3>
+        </div>
+
+        <p className="text-gray-400 mb-8 leading-relaxed max-w-md">
+          Empowering careers through industry-ready education.
+        </p>
+
+        <div className="flex space-x-4">
+          <a className="w-10 h-10 bg-white/10 hover:bg-emerald-500/80 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 group">
+            <FaTwitter className="w-5 h-5 text-gray-400 group-hover:text-white" />
+          </a>
+          <a className="w-10 h-10 bg-white/10 hover:bg-emerald-500/80 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 group">
+            <FaCommentDots className="w-5 h-5 text-gray-400 group-hover:text-white" />
+          </a>
+          <a className="w-10 h-10 bg-white/10 hover:bg-emerald-500/80 rounded-xl flex items-center justify-center transition-all duration-300 hover:scale-110 border border-white/20 group">
+            <FaLinkedinIn className="w-5 h-5 text-gray-400 group-hover:text-white" />
+          </a>
+        </div>
+      </div>
+
+      {/* Quick Links */}
+      <div>
+        <h4 className="text-xl font-bold text-white mb-6 flex items-center">
+          <FaBookOpen className="w-5 h-5 text-emerald-400 mr-3" />
+          Quick Links
+        </h4>
+        <ul className="space-y-3">
+          {["Home", "Courses", "Companies", "Services"].map((item) => (
+            <li key={item}>
+              <a className="text-gray-400 hover:text-emerald-400 font-medium transition-colors duration-300 flex items-center group">
+                <span className="w-2 h-2 rounded-full mr-3 bg-transparent group-hover:bg-emerald-400 transition-all"></span>
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Company */}
+      <div>
+        <h4 className="text-xl font-bold text-white mb-6 flex items-center">
+          <FaShieldAlt className="w-5 h-5 text-emerald-400 mr-3" />
+          Company
+        </h4>
+        <ul className="space-y-3">
+          {["Careers", "Privacy Policy", "Terms of Service", "Contact"].map((item) => (
+            <li key={item}>
+              <a className="text-gray-400 hover:text-emerald-400 font-medium transition-colors duration-300 flex items-center group">
+                <span className="w-2 h-2 rounded-full mr-3 bg-transparent group-hover:bg-emerald-400 transition-all"></span>
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Support */}
+      <div>
+        <h4 className="text-xl font-bold text-white mb-6 flex items-center">
+          <FaUsers className="w-5 h-5 text-emerald-400 mr-3" />
+          Support
+        </h4>
+        <ul className="space-y-3">
+          {["Help Center", "Discord Community", "Placement Assistance", "Report Bug"].map((item) => (
+            <li key={item}>
+              <a className="text-gray-400 hover:text-emerald-400 font-medium transition-colors duration-300 flex items-center group">
+                <span className="w-2 h-2 rounded-full mr-3 bg-transparent group-hover:bg-emerald-400 transition-all"></span>
+                {item}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+
+    {/* Bottom Footer */}
+    <div className="pt-12 mt-12 text-center">
+  <p className="text-gray-500 text-sm">
+    © {new Date().getFullYear()} DNP Learning. All rights reserved.
+  </p>
+</div>
 
 
-
+  </div>
+</footer>
 
     </main>
   );
